@@ -1,8 +1,8 @@
 language: ruby
 script:
-- make zip
+- make
 before_deploy:
-- make zip
+- make
 deploy:
   provider: releases
   skip_cleanup: true
