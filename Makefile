@@ -17,4 +17,4 @@ artifacts/src/icon.png:	assets/icon.png
 
 artifacts/src/info.plist: assets/info.plist artifacts/escaped/script.sh
 	mkdir -p "$(@D)"
-	perl -pe 'BEGIN {open(FH, "<", "artifacts/escaped/script.sh"); $$r = <FH>; close(FH); chomp($$r)}; s/HTMLENTITY_BASH_SCRIPT/$$r/ge' "$(<)" > "$(@)"
+	perl -pe 'BEGIN {open(FH, "<", "artifacts/escaped/script.sh"); local $$/; $$r = <FH>; close(FH); chomp($$r)}; s/HTMLENTITY_BASH_SCRIPT/$$r/ge' "$(<)" > "$(@)"
