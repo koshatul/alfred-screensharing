@@ -2,12 +2,12 @@ language: ruby
 script:
 - make
 before_deploy:
-- make
+- make all
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
     secure: iaAp0cYV91fs2vDYaahZ07A9hkD8ewsBLIyRY9i4RIgfkQFLy+2f1ZAIgyWNwTnvAcN0gD+Ps+utZ6LY5mUOK/2+KUXssL9UTHO5xBgbeIFWl0uEbTdKnQeuGhv0ZWF1iabXtWwddKgPxo06E9kJAYVJVvnRhrlGSBkES+UJvHR+QEXW7rRjiY3nXpGqaxWN7fQZ6VWv06WoDczzrAzTgIrhpmy0NlRcUxpz8juxgm17yNkdcElLCXIgBj1v9wWRwkHGkZBMetrS9Wc/NB1M9+6Yj60eQzyH6RUA2EdjzQXX/ZhtUNuA/6khXspTu73zOJqc1VI+J5GacFXhfpOVKNnBDGVUyG+EbVvZNFbkhBJmHupSGRJxw/TEPxqoSS/NoJ9ZMeXi2e3uW5DdKYodZpp9kZG3eurYES9HO+D6Enxy5jeHNXKZ3e0vhjsSb7rkGADVakjI07dOm2v1XnP7qH+8QB922vooE98FplzAK4PVim+xK8CFUdOt6uWx+xssOQv97PTilaONSukR72vj//QRxKUOpaAZJ/PmOnGDy7ar2osgpg0CD4kOxl49PEGmqmwyfaLF3fQwdDxdQHZBP22ddaLRkKa8p0JcI9Lm7dDlitMZ3/goJuAeqGY4kT+gmSeMrsuQ5xro1jlrgxxDAG8+nlkb93VLh1nvLuXKWbk=
-  file: Screen Sharing.alfredworkflow
+  file: artifacts//build/ScreenSharing.alfredworkflow
   on:
     tags: true
