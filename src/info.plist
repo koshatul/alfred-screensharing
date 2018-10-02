@@ -64,14 +64,21 @@ trap '{
 
 out=""; i=0
 while read -r line; do
-    i=`expr $i + 1`
+	echo "LINE: ${line}" &gt;&gt; ~/tmp/vnclist.out
 
-    if [ $i -lt 5 ]; then continue; fi # skip the header lines
+    if [[ "${line:0:6}" == "vnc://" ]]; then
+        name="${line:6}"
+        domain="${line:6}"
+        hostname="${line:6}"
+    else
+        i=`expr $i + 1`
+        if [ $i -lt 5 ]; then continue; fi # skip the header lines
 
-    name=$(echo "$line" | tr -s ' ' | sed 's/^.*_rfb\._tcp\. //g')
-    domain=$(echo $line | tr -s ' ' | cut -d ' ' -f 5)
-    domain="${domain%?}"
-    hostname="$(escape_hostname $name).$domain"
+        name=$(echo "$line" | tr -s ' ' | sed 's/^.*_rfb\._tcp\. //g')
+        domain=$(echo $line | tr -s ' ' | cut -d ' ' -f 5)
+        domain="${domain%?}"
+        hostname="$(escape_hostname $name).$domain"
+    fi
 
     if [[ "$name" != "$HOSTNAME" &amp;&amp; ( -z "$query" || $name =~ "$query" ) ]]; then
         out+="&lt;item arg=\"$hostname\" uid=\"$hostname\" valid=\"yes\"&gt;\
@@ -83,7 +90,7 @@ while read -r line; do
 
     if (( $(echo $line | cut -d ' ' -f 3) &lt; 2 )); then break; fi # break if no more items will follow
 
-done &lt; &lt;((sleep 1; kill -13 0) &amp; # kill quickly if trapped
+done &lt; &lt;((sleep 1; kill -13 0) &amp; ~/.ctrlzr/bin/list_mru_vncservers.py &amp; # kill quickly if trapped
             dns-sd -B _rfb._tcp)
 
 # silently kill subprocess
