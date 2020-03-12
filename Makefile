@@ -1,7 +1,25 @@
+.PHONY: all
 all: artifacts/build/ScreenSharing.alfredworkflow
 
+.PHONY: docker-build
+docker-build: docker-build-image
+	docker run -ti --rm -v "$(shell pwd):/code" --workdir /code alfred-screensharing:build make inside-docker-build
+
+.PHONY: clean
 clean:
 	$(RM) -r artifacts
+
+.PHONY: docker-build-image
+docker-build-image: build/Dockerfile
+	docker build -t alfred-screensharing:build -f build/Dockerfile .
+
+.PHONY: inside-docker-build
+inside-docker-build:
+	make artifacts/build/ScreenSharing.alfredworkflow
+
+artifacts/escaped/script.sh.docker:
+	mkdir -p "$(@D)"
+	docker run -ti --rm -v "$(shell pwd):/code" --workdir /code perl:5 make inside-docker-build
 
 artifacts/escaped/script.sh: src/script.sh
 	mkdir -p "$(@D)"
